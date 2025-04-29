@@ -1,0 +1,129 @@
+using System.IO;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+
+// Get.Dir extercise 
+
+// var salesFiles = FindFiles("stores");
+
+// foreach (var file in salesFiles)
+// {
+//     Console.WriteLine(file);
+// }
+
+// IEnumerable<string> FindFiles(string folderName)
+// {
+//    List<string> salesFiles = new List<string>();
+//    var foundFiles = Directory.EnumerateFiles(folderName, "*", SearchOption.AllDirectories);
+
+//    foreach (var file in foundFiles)
+//    {
+//      if (file.EndsWith("sales.json"))
+//      {
+//         salesFiles.Add(file);
+//      }
+//    }
+//    return salesFiles;
+// }
+
+
+//Working with path extercise 
+
+// var currentDirectory = Directory.GetCurrentDirectory();
+// var storesDirectory = Path.Combine(currentDirectory, "stores");
+// var salesFiles = FindFiles(storesDirectory);
+
+// foreach(var file in salesFiles)
+// {
+//     Console.WriteLine(file);
+// }
+
+// IEnumerable<string> FindFiles(string folderName)
+// {
+//    List<string> salesFiles = new List<string>();
+//    var foundFiles = Directory.EnumerateFiles(folderName, "*", SearchOption.AllDirectories);
+
+//    foreach (var file in foundFiles)
+//    {
+//      if (file.EndsWith("sales.json"))
+//      {
+//         salesFiles.Add(file);
+//      }
+//    }
+//    return salesFiles;
+// }
+
+
+//fining all .json file
+
+// var currentDirectory = Directory.GetCurrentDirectory();
+// var storesDirectory = Path.Combine(currentDirectory, "stores");
+// var salesFiles = FindFiles(storesDirectory);
+
+// foreach(var file in salesFiles)
+// {
+//     Console.WriteLine(file);
+// }
+
+// IEnumerable<string> FindFiles(string folderName)
+// {
+//    List<string> salesFiles = new List<string>();
+//    var foundFiles = Directory.EnumerateFiles(folderName, "*", SearchOption.AllDirectories);
+
+
+//    foreach (var file in foundFiles)
+//    {
+//     var extension = Path.GetExtension(file);
+//      if (extension == ".json")
+//      {
+//         salesFiles.Add(file);
+//      }
+//    }
+//    return salesFiles;
+// }
+
+
+
+//Create file and directories  and read and write to file 
+
+
+var currentDirectory = Directory.GetCurrentDirectory();
+var storesDirectory = Path.Combine(currentDirectory, "stores");
+
+var salesTotalDir = Path.Combine(currentDirectory, "SalesTotalDir");
+Directory.CreateDirectory(salesTotalDir);
+
+File.WriteAllText(Path.Combine(salesTotalDir, "totals.txt"),String.Empty);
+
+var salesJson = File.ReadAllText($"stores{Path.DirectorySeparatorChar}201{Path.DirectorySeparatorChar}sales.json");
+
+//json conversion 
+var salesData = JsonConvert.DeserializeObject<salesTotal>(salesJson);
+
+
+//write data  
+Console.WriteLine(salesData.Total);
+//File.WriteAllText($"SalesTotalDir{Path.DirectorySeparatorChar}total.txt", salesData.Total.ToString());
+File.AppendAllText($"SalesTotalDir{Path.DirectorySeparatorChar}total.txt", $"{salesData.Total}{Environment.NewLine}");
+
+
+class salesTotal{
+    public double Total {get;set;}
+}
+
+// IEnumerable<string> FindFiles(string folderName)
+// {
+//    List<string> salesFiles = new List<string>();
+//    var foundFiles = Directory.EnumerateFiles(folderName, "*", SearchOption.AllDirectories);
+
+
+//    foreach (var file in foundFiles)
+//    {
+//     var extension = Path.GetExtension(file);
+//      if (extension == ".json")
+//      {
+//         salesFiles.Add(file);
+//      }
+//    }
+//    return salesFiles;
+// }
